@@ -1,0 +1,18 @@
+# Godot 4 缓存与导入产物
+.godot/
+*.tmp
+
+# 导出产物（仅根目录）
+/build/
+
+# 本地密钥
+*.keystore
+
+# Android 构建模板中超过 GitHub 100MB 限制的大文件
+# （在编辑器里执行"项目 > 安装 Android 构建模板"即可还原）
+android/build/libs/
+.gradle/
+
+# Android Gradle 构建中间产物（实测可达 800MB+，可删可重建）
+android/build/build/
+

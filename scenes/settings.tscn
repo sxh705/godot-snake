@@ -1,0 +1,91 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/settings_ui.gd" id="1"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09, 0.1, 0.13, 1)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 32
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "设 置"
+horizontal_alignment = 1
+
+[node name="Grid" type="GridContainer" parent="Center/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 16
+columns = 2
+
+[node name="VolumeLabel" type="Label" parent="Center/Panel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "音量"
+
+[node name="VolumeSlider" type="HSlider" parent="Center/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(280, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 26
+max_value = 100.0
+step = 1.0
+value = 80.0
+
+[node name="CursorLabel" type="Label" parent="Center/Panel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "光标"
+
+[node name="CursorOption" type="OptionButton" parent="Center/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="Spacer" type="Control" parent="Center/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="Center/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(280, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 26
+text = "返 回"
