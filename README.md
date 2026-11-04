@@ -9,14 +9,32 @@ Godot 4.7 编写的贪吃蛇，一套工程同时出 Windows exe 与 Android APK
 - 经典规则：吃食物变长加速，撞墙或撞到自己结束
 - **键盘**：方向键 / WASD 转向，`R` 重开，`Esc` 返回主页
 - **触屏**：右下角方向键（仅触屏设备显示），也可在棋盘任意位置滑动转向（可连续滑动，不必抬手）
+- **强化**：开局先选一项，之后每吃 5 个食物再选一次（三选一），详见 [docs/玩法说明.md](docs/玩法说明.md)
 - 最佳分自动存档（`user://snake_best.cfg`），结束后一键再来一局
 - 棋盘 24×14 格，吃一个食物加 10 分并小幅提速
 
+| 强化 | 上限 | 效果 |
+|---|---|---|
+| 护盾 | 3 层 | 抵挡一次致命撞击，抵消后停顿 0.8 秒供转向 |
+| 穿墙 | 1 层 | 撞墙从对面穿出 |
+| 双倍分 | 3 层 | 每个食物多 10 分 |
+| 疾行 | 3 层 | 移速提升，每个食物额外 +5 分 |
+| 缓行 | 2 层 | 移速下降，操作更从容 |
+| 分数 +50 | — | 立即加 50 分，不占强化位（其余满级时的兜底） |
+
 ```
 start.tscn（开始页）
-  ├─→ game.tscn（贪吃蛇主玩法）
+  ├─→ game.tscn（贪吃蛇主玩法 + 强化系统）
   └─→ settings.tscn（音量 / 光标设置，来自模板，改动即存档）
 ```
+
+## 自检
+
+```
+godot --headless --path . tests/smoke.tscn --quit-after 200
+```
+
+覆盖开局强化、每 5 个食物触发、穿墙、护盾消耗与停顿、死亡判定，输出 `SMOKE PASS` 即通过。
 
 ## 环境
 
@@ -63,7 +81,9 @@ adb install -r build/android/SnakeBite.apk
 
 ## 与模板的差异
 
-- `scenes/game.tscn` + `scripts/game.gd`：贪吃蛇完整玩法（约 190 行 GDScript，自绘棋盘，无额外资源依赖），触屏方向键 + 滑动双输入
+- `scenes/game.tscn` + `scripts/game.gd`：贪吃蛇完整玩法 + 强化系统（自绘棋盘，无额外资源依赖），触屏方向键 + 滑动双输入
+- `tests/`：无头自检场景，覆盖强化节奏与碰撞规则
+- `docs/玩法说明.md`：规则、计分公式、强化表与上手建议
 - `project.godot`：手机端 `orientation=4`（sensorLandscape，横屏双方向跟随）
 - `android/build/gradle.properties`：`org.gradle.daemon=false`——Gradle 守护进程会继承导出输出管道，
   Godot 等不到 EOF 就永不返回（表现为 APK 已生成但导出卡住不退出），禁用后构建约 50 秒且干净退出
