@@ -8,7 +8,7 @@ Godot 4.7 编写的贪吃蛇，一套工程同时出 Windows exe 与 Android APK
 
 - 经典规则：吃食物变长加速，撞墙或撞到自己结束
 - **键盘**：方向键 / WASD 转向，`R` 重开，`Esc` 返回主页
-- **触屏**：在棋盘任意位置滑动转向（可连续滑动，不必抬手）
+- **触屏**：右下角方向键（仅触屏设备显示），也可在棋盘任意位置滑动转向（可连续滑动，不必抬手）
 - 最佳分自动存档（`user://snake_best.cfg`），结束后一键再来一局
 - 棋盘 24×14 格，吃一个食物加 10 分并小幅提速
 
@@ -63,7 +63,10 @@ adb install -r build/android/SnakeBite.apk
 
 ## 与模板的差异
 
-- `scenes/game.tscn` + `scripts/game.gd`：贪吃蛇完整玩法（约 180 行 GDScript，自绘棋盘，无额外资源依赖）
+- `scenes/game.tscn` + `scripts/game.gd`：贪吃蛇完整玩法（约 190 行 GDScript，自绘棋盘，无额外资源依赖），触屏方向键 + 滑动双输入
+- `project.godot`：手机端 `orientation=4`（sensorLandscape，横屏双方向跟随）
+- `android/build/gradle.properties`：`org.gradle.daemon=false`——Gradle 守护进程会继承导出输出管道，
+  Godot 等不到 EOF 就永不返回（表现为 APK 已生成但导出卡住不退出），禁用后构建约 50 秒且干净退出
 - `export_presets.cfg`：包名 `com.example.snakebite`，产品名 SnakeBite
 - `icon.svg`：贪吃蛇图标
 - 开始页文案、`project.godot` 工程名同步更新

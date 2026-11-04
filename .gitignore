@@ -16,3 +16,7 @@ android/build/libs/
 # Android Gradle 构建中间产物（实测可达 800MB+，可删可重建）
 android/build/build/
 
+
+# Godot 每次导出都会重新生成的中间产物（不入库，改用忽略）
+android/build/src/main/assets/
+android/build/src/debug/AndroidManifest.xml

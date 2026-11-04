@@ -41,6 +41,12 @@ func _ready() -> void:
 	$BackButton.pressed.connect(_go_start)
 	_load_best()
 	start_game()
+	# 触屏方向键：只在支持触屏的设备上显示（滑动依旧可用）
+	var pad: Control = $TouchPad
+	pad.visible = DisplayServer.is_touchscreen_available()
+	for pair in [["BtnUp", Vector2i.UP], ["BtnLeft", Vector2i.LEFT], ["BtnRight", Vector2i.RIGHT], ["BtnDown", Vector2i.DOWN]]:
+		var btn: Button = pad.get_node(pair[0])
+		btn.button_down.connect(_turn.bind(pair[1]))
 
 
 func _process(delta: float) -> void:
