@@ -79,6 +79,18 @@ adb install -r build/android/SnakeBite.apk
 > 在编辑器中执行 **项目 → 安装 Android 构建模板**，或从
 > `%APPDATA%\Godot\export_templates\4.7.2.stable\android_source.zip` 解压覆盖 `android/build/`。
 
+## 发布（CI 自动构建）
+
+`.github/workflows/release.yml` 在 GitHub Actions 上自动出双端包：
+
+- **打标签即发布**：`git tag v0.1.0 && git push origin v0.1.0` → 自动在 ubuntu-latest 上
+  下载 Godot 4.7.2 引擎与导出模板，导出 Windows（release）与 Android（debug 签名），
+  并创建 GitHub Release 挂上 `SnakeBite-Windows.zip` 与 `SnakeBite.apk`
+- **手动触发**：Actions 页面 run workflow（或 `gh workflow run release.yml`）→ 只产出 artifact 不发版，用于调试
+- CI 内的 Android 签名是每次构建现生成的临时调试密钥，不使用任何真实密钥；正式签名请在本地导出
+- 本机导出与 CI 导出互不影响：`export_presets.cfg` 的签名路径由 `setup.cmd` 按机器写入，
+  CI 用 `sed` 现场替换，仓库中的空值不携带任何机器信息
+
 ## 与模板的差异
 
 - `scenes/game.tscn` + `scripts/game.gd`：贪吃蛇完整玩法 + 强化系统（自绘棋盘，无额外资源依赖），触屏方向键 + 滑动双输入
